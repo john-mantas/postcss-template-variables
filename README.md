@@ -7,7 +7,7 @@
 ```css
 /* Convert this: */
 .foo {
-  color: tvar( settings.color );
+  color: "tvar( settings.color )";
 }
 
 /* to this: */
@@ -16,7 +16,7 @@
 }
 ```
 
-**With custom options** (prefix: `'$'`, template.start: `'<<'`, template.end: `'>>'`)
+**With custom options** (prefix:`'$'`, quotes:`false`, template.start:`'<<'`, template.end:`'>>'`)
 ```css
 /* Convert this: */
 .foo {
@@ -64,6 +64,7 @@ module.exports = {
   plugins: [
     require('postcss-template-variables')({
       prefix: 'tvar',
+      quotes: true,
       template: {
         start: '{{',
         end: '}}'
@@ -74,6 +75,8 @@ module.exports = {
 ```
 
 - **prefix** {string} (default: `'tvar'`) : Select a symbol or a word to be used for matching
+
+- **quotes** {boolean} (default: `true`) : Enable/disable quotes around variables
 
 - **template.start** {string} (default: `'{{'`) : The opening part used by the templating language
 

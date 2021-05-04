@@ -1,6 +1,6 @@
 {
   "name": "postcss-template-variables",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "PostCSS plugin to use variables from templating languages",
   "keywords": [
     "postcss",

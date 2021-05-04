@@ -1,5 +1,6 @@
 module.exports = (opts = {
   prefix: 'tvar',
+  quotes: true,
   template: {
     open: '{{',
     close: '}}'
@@ -13,8 +14,11 @@ module.exports = (opts = {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
+  const START_REGEXP = `${opts.quotes?'"':''}${escapeRegExp(opts.prefix)}${escapeRegExp(START_GROUP)}`,
+        END_REGEXP = `${escapeRegExp(END_GROUP)}${opts.quotes ? '"' : ''}`;
+
   const VALUE_REGEXP = new RegExp(
-    `${escapeRegExp(opts.prefix)}${escapeRegExp(START_GROUP)}(.*?)${escapeRegExp(END_GROUP)}`,
+    `${START_REGEXP}(.*?)${END_REGEXP}`,
     'g'
   );
 

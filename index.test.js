@@ -4,6 +4,7 @@ const plugin = require('./')
 
 const customOptions = {
   prefix: '$',
+  quotes: false,
   template: {
     open: '<<',
     close: '>>'
@@ -21,28 +22,28 @@ describe('Replace with default options', () => {
   describe('one', () => {
     test('template variable', async () => {
       await run(
-        'p { color: tvar( settings.color ); }',
+        'p { color: "tvar( settings.color )"; }',
         'p { color: {{ settings.color }}; }'
       )
     })
 
     test('template variable with units', async () => {
       await run(
-        'p { padding: tvar( settings.padding )px; }',
+        'p { padding: "tvar( settings.padding )"px; }',
         'p { padding: {{ settings.padding }}px; }'
       )
     })
 
     test('template variable with filters', async () => {
       await run(
-        'p { padding: tvar( settings.padding | append: "px" ); }',
+        'p { padding: "tvar( settings.padding | append: "px" )"; }',
         'p { padding: {{ settings.padding | append: "px" }}; }'
       )
     })
 
     test('enclosed template variables', async () => {
       await run(
-        'p { background-image: url(tvar( settings.image | img_url: "100x" )); }',
+        'p { background-image: url("tvar( settings.image | img_url: "100x" )"); }',
         'p { background-image: url({{ settings.image | img_url: "100x" }}); }'
       )
     })
@@ -51,28 +52,28 @@ describe('Replace with default options', () => {
   describe('many', () => {
     test('template variables', async () => {
       await run(
-        'p { padding: tvar( settings.y_length ) tvar( settings.x_length ); }',
+        'p { padding: "tvar( settings.y_length )" "tvar( settings.x_length )"; }',
         'p { padding: {{ settings.y_length }} {{ settings.x_length }}; }'
       )
     })
 
     test('template variables with units', async () => {
       await run(
-        'p { padding: tvar( settings.y_length )px tvar( settings.x_length )px; }',
+        'p { padding: "tvar( settings.y_length )"px "tvar( settings.x_length )"px; }',
         'p { padding: {{ settings.y_length }}px {{ settings.x_length }}px; }'
       )
     })
 
     test('template variables with filters', async () => {
       await run(
-        'p { padding: tvar( settings.y_length | append: "px" ) tvar( settings.x_length | append: "px" ); }',
+        'p { padding: "tvar( settings.y_length | append: "px" )" "tvar( settings.x_length | append: "px" )"; }',
         'p { padding: {{ settings.y_length | append: "px" }} {{ settings.x_length | append: "px" }}; }'
       )
     })
 
     test('enclosed template variables', async () => {
       await run(
-        'p { background-image: url(tvar( settings.image | img_url: "100x" )), url(tvar( settings.image | img_url: "100x" )); }',
+        'p { background-image: url("tvar( settings.image | img_url: "100x" )"), url("tvar( settings.image | img_url: "100x" )"); }',
         'p { background-image: url({{ settings.image | img_url: "100x" }}), url({{ settings.image | img_url: "100x" }}); }'
       )
     })
