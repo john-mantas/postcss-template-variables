@@ -5,14 +5,27 @@
 [PostCSS]: https://github.com/postcss/postcss
 
 ```css
+/* Convert this: */
 .foo {
   color: tvar( settings.color );
 }
-```
 
-```css
+/* to this: */
 .foo {
   color: {{ settings.color }};
+}
+```
+
+**With custom options** (prefix: `'$'`, template.start: `'<<'`, template.end: `'>>'`)
+```css
+/* Convert this: */
+.foo {
+  color: $( settings.color );
+}
+
+/* to this: */
+.foo {
+  color: << settings.color >>;
 }
 ```
 
@@ -43,3 +56,25 @@ module.exports = {
 ```
 
 [official docs]: https://github.com/postcss/postcss#usage
+
+## Options
+
+```js
+module.exports = {
+  plugins: [
+    require('postcss-template-variables')({
+      prefix: 'tvar',
+      template: {
+        start: '{{',
+        end: '}}'
+      }
+    })
+  ]
+}
+```
+
+- **prefix** {string} (default: `'tvar'`) : Select a symbol or a word to be used for matching
+
+- **template.start** {string} (default: `'{{'`) : The opening part used by the templating language
+
+- **template.end** {string} (default: `'}}'`) : The closing part used by the templating language
