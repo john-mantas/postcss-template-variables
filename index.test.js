@@ -2,6 +2,7 @@ const postcss = require('postcss')
 
 const plugin = require('./')
 
+// Option values used in test expectations
 const customOptions = {
   prefix: '$',
   quotes: false,
@@ -9,7 +10,17 @@ const customOptions = {
     open: '<<',
     close: '>>'
   }
-};
+}
+
+// Parameters passed to plugin custom options
+const customOptionsParameters = {
+  prefix: '$',
+  quotes: false,
+  template: {
+    open: '<<',
+    close: '>>'
+  }
+}
 
 async function run(input, output, opts) {
   let result = await postcss([plugin(opts)]).process(input, { from: undefined })
@@ -87,7 +98,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { color: ${customOptions.prefix}( settings.color ); }`,
         `p { color: ${customOptions.template.open} settings.color ${customOptions.template.close}; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -95,7 +106,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.padding )px; }`,
         `p { padding: ${customOptions.template.open} settings.padding ${customOptions.template.close}px; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -103,7 +114,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.padding | append: "px" ); }`,
         `p { padding: ${customOptions.template.open} settings.padding | append: "px" ${customOptions.template.close}; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -111,7 +122,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { background-image: url(${customOptions.prefix}( settings.image | img_url: "100x" )); }`,
         `p { background-image: url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}); }`,
-        customOptions
+        customOptionsParameters
       )
     })
   })
@@ -121,7 +132,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.y_length ) ${customOptions.prefix}( settings.x_length ); }`,
         `p { padding: ${customOptions.template.open} settings.y_length ${customOptions.template.close} ${customOptions.template.open} settings.x_length ${customOptions.template.close}; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -129,7 +140,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.y_length )px ${customOptions.prefix}( settings.x_length )px; }`,
         `p { padding: ${customOptions.template.open} settings.y_length ${customOptions.template.close}px ${customOptions.template.open} settings.x_length ${customOptions.template.close}px; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -137,7 +148,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.y_length | append: "px" ) ${customOptions.prefix}( settings.x_length | append: "px" ); }`,
         `p { padding: ${customOptions.template.open} settings.y_length | append: "px" ${customOptions.template.close} ${customOptions.template.open} settings.x_length | append: "px" ${customOptions.template.close}; }`,
-        customOptions
+        customOptionsParameters
       )
     })
 
@@ -145,7 +156,7 @@ describe('Replace with custom options', () => {
       await run(
         `p { background-image: url(${customOptions.prefix}( settings.image | img_url: "100x" )), url(${customOptions.prefix}( settings.image | img_url: "100x" )); }`,
         `p { background-image: url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}), url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}); }`,
-        customOptions
+        customOptionsParameters
       )
     })
   })

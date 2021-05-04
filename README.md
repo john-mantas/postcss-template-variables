@@ -82,6 +82,8 @@ module.exports = {
 
 - **template.end** {string} (default: `'}}'`) : The closing part used by the templating language
 
+*If an option is not set, it will fallback to the default value.*
+
 ## License
 
 [MIT](./LICENSE)
