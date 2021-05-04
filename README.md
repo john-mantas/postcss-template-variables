@@ -78,3 +78,7 @@ module.exports = {
 - **template.start** {string} (default: `'{{'`) : The opening part used by the templating language
 
 - **template.end** {string} (default: `'}}'`) : The closing part used by the templating language
+
+## License
+
+[MIT](./LICENSE)
