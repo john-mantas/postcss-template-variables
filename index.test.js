@@ -45,14 +45,21 @@ describe('Replace with default options', () => {
       )
     })
 
-    test('template variable with filters', async () => {
+    test('template variable with filter', async () => {
       await run(
         'p { padding: "tvar( settings.padding | append: "px" )"; }',
         'p { padding: {{ settings.padding | append: "px" }}; }'
       )
     })
 
-    test('enclosed template variables', async () => {
+    test('template variable with multiple filters', async () => {
+      await run(
+        'p { padding: "tvar( settings.padding | plus: 0 | append: "px" )"; }',
+        'p { padding: {{ settings.padding | plus: 0 | append: "px" }}; }'
+      )
+    })
+
+    test('enclosed template variable', async () => {
       await run(
         'p { background-image: url("tvar( settings.image | img_url: "100x" )"); }',
         'p { background-image: url({{ settings.image | img_url: "100x" }}); }'
@@ -88,6 +95,13 @@ describe('Replace with default options', () => {
         'p { background-image: url({{ settings.image | img_url: "100x" }}), url({{ settings.image | img_url: "100x" }}); }'
       )
     })
+
+    test('template variables on combined cases', async () => {
+      await run(
+        'p { background-image: "tvar( settings.color_bg )", url("tvar( settings.image | img_url: "100x" )"); }',
+        'p { background-image: {{ settings.color_bg }}, url({{ settings.image | img_url: "100x" }}); }'
+      )
+    })
   })
 })
 
@@ -110,7 +124,7 @@ describe('Replace with custom options', () => {
       )
     })
 
-    test('template variable with filters', async () => {
+    test('template variable with filter', async () => {
       await run(
         `p { padding: ${customOptions.prefix}( settings.padding | append: "px" ); }`,
         `p { padding: ${customOptions.template.open} settings.padding | append: "px" ${customOptions.template.close}; }`,
@@ -118,7 +132,15 @@ describe('Replace with custom options', () => {
       )
     })
 
-    test('enclosed template variables', async () => {
+    test('template variable with multiple filters', async () => {
+      await run(
+        `p { padding: ${customOptions.prefix}( settings.padding | plus: 0 | append: "px" ); }`,
+        `p { padding: ${customOptions.template.open} settings.padding | plus: 0 | append: "px" ${customOptions.template.close}; }`,
+        customOptionsParameters
+      )
+    })
+
+    test('enclosed template variable', async () => {
       await run(
         `p { background-image: url(${customOptions.prefix}( settings.image | img_url: "100x" )); }`,
         `p { background-image: url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}); }`,
@@ -156,6 +178,14 @@ describe('Replace with custom options', () => {
       await run(
         `p { background-image: url(${customOptions.prefix}( settings.image | img_url: "100x" )), url(${customOptions.prefix}( settings.image | img_url: "100x" )); }`,
         `p { background-image: url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}), url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}); }`,
+        customOptionsParameters
+      )
+    })
+
+    test('template variables on combined cases', async () => {
+      await run(
+        `p { background-image: ${customOptions.prefix}( settings.color_bg ), url(${customOptions.prefix}( settings.image | img_url: "100x" )); }`,
+        `p { background-image: ${customOptions.template.open} settings.color_bg ${customOptions.template.close}, url(${customOptions.template.open} settings.image | img_url: "100x" ${customOptions.template.close}); }`,
         customOptionsParameters
       )
     })
