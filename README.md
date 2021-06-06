@@ -18,7 +18,7 @@
 }
 ```
 
-**With custom options** (prefix:`'$'`, quotes:`false`, template.start:`'<<'`, template.end:`'>>'`)
+**With custom options** (prefix:`'$'`, quotes:`false`, template.open:`'<<'`, template.close:`'>>'`)
 ```css
 /* Convert this: */
 .foo {
@@ -70,8 +70,8 @@ module.exports = {
       prefix: 'tvar',
       quotes: true,
       template: {
-        start: '{{',
-        end: '}}'
+        open: '{{',
+        close: '}}'
       }
     })
   ]
@@ -82,9 +82,9 @@ module.exports = {
 
 - **quotes** {boolean} (default: `true`) : Enable/disable quotes around variables
 
-- **template.start** {string} (default: `'{{'`) : The opening part used by the templating language
+- **template.open** {string} (default: `'{{'`) : The opening part used by the templating language
 
-- **template.end** {string} (default: `'}}'`) : The closing part used by the templating language
+- **template.close** {string} (default: `'}}'`) : The closing part used by the templating language
 
 *If an option is not set, it will fallback to the default value.*
 
