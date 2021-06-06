@@ -11,7 +11,7 @@ module.exports = (opts) => {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
-  const START_REGEXP = `${QUOTES?'"':''}${escapeRegExp(PREFIX)}${escapeRegExp(START_GROUP)}`,
+  const START_REGEXP = `${QUOTES ? '"' : ''}${escapeRegExp(PREFIX)}${escapeRegExp(START_GROUP)}`,
         END_REGEXP = `${escapeRegExp(END_GROUP)}${QUOTES ? '"' : ''}`;
 
   const VALUE_REGEXP = new RegExp(
@@ -20,7 +20,7 @@ module.exports = (opts) => {
   );
 
   const valueReplacer = (match, p1) => {
-    return `${TEMPLATE_OPEN}${p1}${TEMPLATE_CLOSE}`
+    return `${TEMPLATE_OPEN}${p1}${TEMPLATE_CLOSE}`;
   };
 
   return {
