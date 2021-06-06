@@ -8,11 +8,13 @@
 /* Convert this: */
 .foo {
   color: "tvar( settings.color )";
+  background: "tvar( settings.color_bg )", url("tvar( settings.background | file_img_url: '100x' )");
 }
 
 /* to this: */
 .foo {
   color: {{ settings.color }};
+  background: {{ settings.color_bg }}, url({{ settings.background | file_img_url: '100x' }});
 }
 ```
 
@@ -21,11 +23,13 @@
 /* Convert this: */
 .foo {
   color: $( settings.color );
+  background: $( settings.color_bg ), url($( settings.background | file_img_url: '100x' ));
 }
 
 /* to this: */
 .foo {
   color: << settings.color >>;
+  background: << settings.color_bg >>, url(<< settings.background | file_img_url: '100x' >>);
 }
 ```
 
